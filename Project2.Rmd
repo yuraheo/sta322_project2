@@ -1,0 +1,31 @@
+```{r}
+# Define factor levels
+rotor_length <- c("7.5 cm", "8.5 cm")
+leg_length   <- c("7.5 cm", "12.0 cm")
+leg_width    <- c("3.2 cm", "5.0 cm")
+paper_clip   <- c("No", "Yes")
+
+# Create full 2^4 factorial design
+base_design <- expand.grid(
+  RotorLength = rotor_length,
+  LegLength   = leg_length,
+  LegWidth    = leg_width,
+  PaperClip   = paper_clip
+)
+
+# Add 4 replicates per combination
+design <- base_design[rep(1:nrow(base_design), each = 4), ]
+
+# Add replicate number
+design$Replicate <- rep(1:4, times = nrow(base_design))
+
+# Add empty column for flight time
+design$FlightTime_sec <- NA
+
+# Save CSV
+#write.csv(design, "helicopter_design.csv", row.names = FALSE)
+
+#design
+
+```
+

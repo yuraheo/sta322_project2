@@ -76,6 +76,8 @@ summary(fit_full)
 confint(fit_full)
 ```
 
+Figure 1: Summary Output and CI of Full Factorial Design
+
 ```{r}
 
 par(mfrow = c(1, 2)) 
@@ -84,6 +86,8 @@ plot(fit_full, which = 2)
 
 par(mfrow = c(1, 1))
 ```
+
+Figure 2: Residual Analysis of Full Factorial Model
 
 ```{r}
 
@@ -94,3 +98,5 @@ best_row <- emm_tbl[which.max(emm_tbl$emmean), ]
 best_row
 
 ```
+
+Figure 1: Output of Combination of Longest Predicted Helicopter Time

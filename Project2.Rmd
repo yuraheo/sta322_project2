@@ -28,6 +28,8 @@ design$FlightTime_sec <- NA
 #design
 
 ```
+
+
 ```{r}
 library(tidyverse)
 library(emmeans)
@@ -74,16 +76,18 @@ Even though statististical differences are not significant, we can still identif
 * Longer legs (12 cm)  
 * Wider legs (5.0 cm)
 * A paperclip attached
-* Longer rotor length of 8.5 cm
+* Longer rotor length (8.5 cm)
 
 
 
-# Diagnostics
+# Model Justification and Diagnostics
 ```{r}
 par(mfrow = c(1, 2))
-plot(fit_main2, which = 1)  # Residuals vs fitted (check linearity + constant variance)
-plot(fit_main2, which = 2)  # Normal Q–Q plot of residuals
+plot(fit_full, which = 1)  # Residuals vs fitted (check linearity + constant variance)
+plot(fit_full, which = 2)  # Normal Q–Q plot of residuals
 
 par(mfrow = c(1, 1))
 ```
-
+For this experiment, we chose a full factorial design consisting of four factors: roter length(2 levels), leg length(2 levels), leg width(2 levels), paperclip(2 levels). Because the project asks the best combination and interaction effects, a full factorial model makes it the most accurate as it produces predicted means for all 16 combinations.   
+The residuals appear randomly scattered around zeros across the entire range and there is no clear curvature or funneling pattern suggesting there is no evidence of missing nonlinear structure. Homoscedasticity holds reasonably well as the vertical spread of residuals is roughly constant across fitted values.  
+The QQ plot shows that the normality assumption is largely satisfied as it follows the 45 degree line.  

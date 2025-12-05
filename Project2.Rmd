@@ -28,6 +28,7 @@ design$FlightTime_sec <- NA
 #design
 
 ```
+
 ```{r}
 library(tidyverse)
 library(emmeans)
@@ -53,32 +54,19 @@ confint(fit_full)
 
 # Q1. Which factors are most important to make helicopters that fly longer?
 
-The model results indicate that leg length and paperclip use are the most important factors influencing helicopter flight duration. The effect of increasing leg length (from 7.5cm to 12.0cm) is estimated to decrease flight time by 0.26 seconds (SE = 0.0587). With the 95% confidence interval being entirely below zero, this shows strong evidence that longer legs reduce flight time, making shorter legs the better design. 
+The model results indicate that leg length and paperclip use are the most important factors influencing helicopter flight duration. The effect of increasing leg length (from 7.5cm to 12.0cm) is estimated to decrease flight time by 0.26 seconds (SE = 0.0587). With the 95% confidence interval being entirely below zero, this shows strong evidence that longer legs reduce flight time, making shorter legs the better design.
 
 # Q2. Is there any evidence that the effect of rotor length differs by leg width?
-```{r}
-# test rotor:leg_width interaction
-summary(fit_main2)
-# rotor effect within each leg width level 
-emm_rw <- emmeans(fit_main2, ~ rotor | leg_width)
-emm_rw
-contrast(emm_rw, "revpairwise")  # rotor_high - rotor_low at each leg_width
-# If the differences (and/or interaction p-value) are large and significant,
-# that’s evidence that rotor effect depends on leg width.
-```
 
-
+The analysis of our full factorial design shows that the `rotor:leg_width` interaction is not statistically significant (p = 0.43), meaning the interaction does not meaningfully improve the model. The point estimate for the `rotor:leg_width` interaction is -0.18 seconds, meaning that the difference in flight time between the 8.5 and 7.5 cm rotors is approximately 0.18 seconds shorter when the legs are 5 cm wide than when the legs are 3.2 cm wide. Because our 95% confidence interval is (-0.64, 0.28) and includes 0, there is insufficient statistical evidence to conclude that the effect of rotor length depends on leg width.
 
 # Q3: What would you recommend as the ideal combination to make the helicopter fly long?
-Even though statististical differences are not significant, we can still identify the best performing condition by examining the predicted flight times from the full model. The conditions producing the highest predicted flight time were those with: 
-* Longer legs (12 cm)  
-* Wider legs (5.0 cm)
-* A paperclip attached
-* Longer rotor length of 8.5 cm
 
-
+Even though statististical differences are not significant, we can still identify the best performing condition by examining the predicted flight times from the full model. The conditions producing the highest predicted flight time were those with: \* Longer legs (12 cm)\
+\* Wider legs (5.0 cm) \* A paperclip attached \* Longer rotor length of 8.5 cm
 
 # Diagnostics
+
 ```{r}
 par(mfrow = c(1, 2))
 plot(fit_main2, which = 1)  # Residuals vs fitted (check linearity + constant variance)
@@ -86,4 +74,3 @@ plot(fit_main2, which = 2)  # Normal Q–Q plot of residuals
 
 par(mfrow = c(1, 1))
 ```
-

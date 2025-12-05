@@ -58,41 +58,7 @@ fit_full <- lm(
 summary(fit_full)
 confint(fit_full)
 ```
-
-# Q1. Which factors are most important to make helicopters that fly longer?
-
-The model results indicate that leg length and paperclip use are the most important factors influencing helicopter flight duration. The effect of increasing leg length (from 7.5cm to 12.0cm) is estimated to decrease flight time by 0.26 seconds (SE = 0.0587). With the 95% confidence interval being entirely below zero, this shows strong evidence that longer legs reduce flight time, making shorter legs the better design.
-
-# Q2. Is there any evidence that the effect of rotor length differs by leg width?
-
-The analysis of our full factorial design shows that the `rotor:leg_width` interaction is not statistically significant (p = 0.43), meaning the interaction does not meaningfully improve the model. The point estimate for the `rotor:leg_width` interaction is -0.18 seconds, meaning that the difference in flight time between the 8.5 and 7.5 cm rotors is approximately 0.18 seconds shorter when the legs are 5 cm wide than when the legs are 3.2 cm wide. Because our 95% confidence interval is (-0.64, 0.28) and includes 0, there is insufficient statistical evidence to conclude that the effect of rotor length depends on leg width.
-
-# Q3: What would you recommend as the ideal combination to make the helicopter fly long?
-
-
-
-Even though statististical differences are not significant, we can still identify the best performing condition by examining the predicted flight times from the full model. The conditions producing the highest predicted flight time were those with: \* Longer legs (12 cm)\
-\* Wider legs (5.0 cm) \* A paperclip attached \* Longer rotor length of 8.5 cm
-
-```{r}
-library(emmeans)
-
-fit_full <- lm(FlightTime_sec ~ rotor * leg_len * leg_width * clip, data = heli)
-
-emm_all  <- emmeans(fit_full, ~ rotor * leg_len * leg_width * clip)
-emm_tbl  <- summary(emm_all)   
-
-best_row <- emm_tbl[which.max(emm_tbl$emmean), ]
-best_row
-
-
-```
-
-Even though statistical differences are not significant, we can still identify the best-performing conditions to find an optimal helicopter design by examining the predicted flight times from the full factorial. We estimated the model-based mean flight times from the `emmeans` output and identified the combination with the largest predicted mean flight time. The longest predicted mean flight time is about 2.44 seconds (with a 95% confidence interval of (2.21, 2.67)) for a helicopter with a rotor of 8.5 cm (longer rotor/high setting), leg length of 7.5 cm (shorter leg length/low setting), leg width of 5.0 cm (longer leg width/high setting), and no paper clip attached (low setting). Therefore, the ideal combination to make the helicopter fly long is a rotor of 8.5 cm, leg length of 7.5 cm, leg width of 5.0 cm, and no paper clip attached.
->>>>>>> 5728b22a84a753f98a105c26ce61f6a5e7fb2eaa
-
 # Model Justification and Diagnostics
-# Diagnostics
 
 ```{r}
 par(mfrow = c(1, 2))
@@ -104,4 +70,31 @@ par(mfrow = c(1, 1))
 For this experiment, we chose a full factorial design consisting of four factors: roter length(2 levels), leg length(2 levels), leg width(2 levels), paperclip(2 levels). Because the project asks the best combination and interaction effects, a full factorial model makes it the most accurate as it produces predicted means for all 16 combinations.   
 The residuals appear randomly scattered around zeros across the entire range and there is no clear curvature or funneling pattern suggesting there is no evidence of missing nonlinear structure. Homoscedasticity holds reasonably well as the vertical spread of residuals is roughly constant across fitted values.  
 The QQ plot shows that the normality assumption is largely satisfied as it follows the 45 degree line.  
+
+# Q1. Which factors are most important to make helicopters that fly longer?
+
+The model results indicate that leg length and paperclip use are the most important factors influencing helicopter flight duration. The effect of increasing leg length (from 7.5cm to 12.0cm) is estimated to decrease flight time by 0.26 seconds (SE = 0.0587). With the 95% confidence interval being entirely below zero, this shows strong evidence that longer legs reduce flight time, making shorter legs the better design.
+
+# Q2. Is there any evidence that the effect of rotor length differs by leg width?
+
+The analysis of our full factorial design shows that the `rotor:leg_width` interaction is not statistically significant (p = 0.43), meaning the interaction does not meaningfully improve the model. The point estimate for the `rotor:leg_width` interaction is -0.18 seconds, meaning that the difference in flight time between the 8.5 and 7.5 cm rotors is approximately 0.18 seconds shorter when the legs are 5 cm wide than when the legs are 3.2 cm wide. Because our 95% confidence interval is (-0.64, 0.28) and includes 0, there is insufficient statistical evidence to conclude that the effect of rotor length depends on leg width.
+
+# Q3: What would you recommend as the ideal combination to make the helicopter fly long?
+
+Even though statististical differences are not significant, we can still identify the best performing condition by examining the predicted flight times from the full model. The conditions producing the highest predicted flight time were those with: \* Longer legs (12 cm)\
+\* Wider legs (5.0 cm) \* A paperclip attached \* Longer rotor length of 8.5 cm
+
+```{r}
+library(emmeans)
+
+emm_all  <- emmeans(fit_full, ~ rotor * leg_len * leg_width * clip)
+emm_tbl  <- summary(emm_all)   
+
+best_row <- emm_tbl[which.max(emm_tbl$emmean), ]
+best_row
+
+
+```
+
+Even though statistical differences are not significant, we can still identify the best-performing conditions to find an optimal helicopter design by examining the predicted flight times from the full factorial. We estimated the model-based mean flight times from the `emmeans` output and identified the combination with the largest predicted mean flight time. The longest predicted mean flight time is about 2.44 seconds (with a 95% confidence interval of (2.21, 2.67)) for a helicopter with a rotor of 8.5 cm (longer rotor/high setting), leg length of 7.5 cm (shorter leg length/low setting), leg width of 5.0 cm (longer leg width/high setting), and no paper clip attached (low setting). Therefore, the ideal combination to make the helicopter fly long is a rotor of 8.5 cm, leg length of 7.5 cm, leg width of 5.0 cm, and no paper clip attached.
 

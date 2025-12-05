@@ -67,6 +67,7 @@ fit_full <- lm(
   data = heli
 )
 summary(fit_full)
+confint(fit_full)
 ```
 
 ## Esimate mean and 95% CI

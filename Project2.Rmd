@@ -58,18 +58,17 @@ fit_main <- lm(
 )
 
 summary(fit_main)
+confint(fit_main)
 ```
 The model results indicate that leg length and paperclip use are the most important factors influencing helicopter flight duration. The effect of increasing leg length (from 7.5cm to 12.0cm) is estimated to decrease flight time by 0.26 seconds (SE = 0.0587). With the 95% confidence interval being entirely below zero, this shows strong evidence that longer legs reduce flight time, making shorter legs the better design. 
 ```{r}
-# main efects + selective interactions 
-fit_main2 <- aov(flight_time ~ rotor + leg_len + leg_width + clip +
-                   rotor:leg_width,   
-                 data = heli)
-
-summary(fit_main2)
+fit_full <- lm(
+  FlightTime_sec ~ rotor * leg_len * leg_width * clip,
+  data = heli
+)
+summary(fit_full)
 ```
 
-Look at ANOVA summary: larger F and smaller p values => more important
 ## Esimate mean and 95% CI
 ```{r}
 emmeans(fit_main2, specs = "rotor")       # means & CI for rotor length

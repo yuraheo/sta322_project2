@@ -28,4 +28,40 @@ design$FlightTime_sec <- NA
 #design
 
 ```
+```{r}
+library(tidyverse)
+library(emmeans)
+heli <- read_csv("helicopter_design.csv")
 
+glimpse(heli)
+heli <- heli %>%
+  mutate(
+    rotor    = factor(rotor),
+    leg_len  = factor(leg_len),
+    leg_width= factor(leg_width),
+    clip     = factor(clip)
+  )
+
+# fit full factorial
+fit_full <- aov(flight_time ~ rotor * leg_len * leg_width * clip, data = heli)
+
+summary(fit_full)  # anova table for main effects + all interactions
+
+```
+
+# Q1. Which factors are most important to make helicopters that fly longer?
+
+Look at ANOVA summary: larger F and smaller p values => more important
+## Esimate mean and 95% CI
+```{r}
+emmeans(fit_main2, specs = "rotor")       # means & CI for rotor length
+emmeans(fit_main2, specs = "leg_len")     # means & CI for leg length
+emmeans(fit_main2, specs = "leg_width")   # means & CI for leg width
+emmeans(fit_main2, specs = "clip")        # means & CI for paperclip
+```
+
+
+# Q2. Is there any evidence that the effect of rotor length differs by leg width?
+
+
+# Q3: What would you recommend as the ideal combination to make the helicopter fly long?

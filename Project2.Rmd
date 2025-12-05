@@ -79,6 +79,7 @@ confint(fit_full)
 ```{r}
 
 par(mfrow = c(1, 2)) 
+plot(fit_full, which = 1)
 plot(fit_full, which = 2)  
 
 par(mfrow = c(1, 1))

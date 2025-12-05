@@ -50,6 +50,14 @@ summary(fit_full)  # anova table for main effects + all interactions
 ```
 
 # Q1. Which factors are most important to make helicopters that fly longer?
+```{r}
+# main efects + selective interactions 
+fit_main2 <- aov(flight_time ~ rotor + leg_len + leg_width + clip +
+                   rotor:leg_width,   
+                 data = heli)
+
+summary(fit_main2)
+```
 
 Look at ANOVA summary: larger F and smaller p values => more important
 ## Esimate mean and 95% CI
@@ -58,10 +66,54 @@ emmeans(fit_main2, specs = "rotor")       # means & CI for rotor length
 emmeans(fit_main2, specs = "leg_len")     # means & CI for leg length
 emmeans(fit_main2, specs = "leg_width")   # means & CI for leg width
 emmeans(fit_main2, specs = "clip")        # means & CI for paperclip
+
+# High vs low *effects* (difference + 95% CI) for each factor
+contrast(emmeans(fit_main2, "rotor"),     method = "revpairwise")  # high - low
+contrast(emmeans(fit_main2, "leg_len"),   method = "revpairwise")
+contrast(emmeans(fit_main2, "leg_width"), method = "revpairwise")
+contrast(emmeans(fit_main2, "clip"),      method = "revpairwise")
 ```
 
 
 # Q2. Is there any evidence that the effect of rotor length differs by leg width?
+```{r}
+# test rotor:leg_width interaction
+summary(fit_main2)
+# rotor effect within each leg width level 
+emm_rw <- emmeans(fit_main2, ~ rotor | leg_width)
+emm_rw
+contrast(emm_rw, "revpairwise")  # rotor_high - rotor_low at each leg_width
+# If the differences (and/or interaction p-value) are large and significant,
+# that’s evidence that rotor effect depends on leg width.
+```
+
 
 
 # Q3: What would you recommend as the ideal combination to make the helicopter fly long?
+```{r}
+# Use model to predict mean flight time for *every* combination
+combos <- expand.grid(
+  rotor     = levels(heli$rotor),
+  leg_len   = levels(heli$leg_len),
+  leg_width = levels(heli$leg_width),
+  clip      = levels(heli$clip)
+)
+
+combos$pred_flight <- predict(fit_main2, newdata = combos)
+
+# Sort from longest to shortest predicted flight time
+best_combos <- combos %>% arrange(desc(pred_flight))
+
+best_combos    # first row = recommended (“ideal”) combination
+
+```
+
+# Diagnostics
+```{r}
+par(mfrow = c(1, 2))
+plot(fit_main2, which = 1)  # Residuals vs fitted (check linearity + constant variance)
+plot(fit_main2, which = 2)  # Normal Q–Q plot of residuals
+
+par(mfrow = c(1, 1))
+```
+

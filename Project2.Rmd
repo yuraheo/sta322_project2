@@ -67,13 +67,16 @@ plot(fit_full, which = 2)  # Normal Q–Q plot of residuals
 
 par(mfrow = c(1, 1))
 ```
-For this experiment, we chose a full factorial design consisting of four factors: roter length(2 levels), leg length(2 levels), leg width(2 levels), paperclip(2 levels). Because the project asks the best combination and interaction effects, a full factorial model makes it the most accurate as it produces predicted means for all 16 combinations.   
+For this experiment, we used a full factorial experimental design with four factors—rotor length, leg length, leg width, and paperclip use, each at two levels (2×2×2×2 = 16 total design combinations). To ensure adequate precision and allow estimation of variability at each condition, we collected four independent flight-time measurements per combination, resulting in 64 total experimental runs. 
+
+Because the project requires identifying (1) which factors matter most, (2) whether interaction effects exist, and (3) the best-performing combination, a full factorial model is the most appropriate analytical approach. This model estimates all main effects and interaction effects, allowing us to evaluate both individual factor contributions and how factors jointly influence performance.  
+
 The residuals appear randomly scattered around zeros across the entire range and there is no clear curvature or funneling pattern suggesting there is no evidence of missing nonlinear structure. Homoscedasticity holds reasonably well as the vertical spread of residuals is roughly constant across fitted values.  
 The QQ plot shows that the normality assumption is largely satisfied as it follows the 45 degree line.  
 
 # Q1. Which factors are most important to make helicopters that fly longer?
 
-The model results indicate that leg length and paperclip use are the most important factors influencing helicopter flight duration. The effect of increasing leg length (from 7.5cm to 12.0cm) is estimated to decrease flight time by 0.26 seconds (SE = 0.0587). With the 95% confidence interval being entirely below zero, this shows strong evidence that longer legs reduce flight time, making shorter legs the better design.
+Leg length appears to be the most important factor for increasing flight time, with longer legs showing the largest positive estimated effect of +0.240 seconds. Longer leg width and paperclip use also contribute positively, though to a smaller degree (+0.240 seconds, +0.158 seconds respectively). However, none of these effects reach statistical significance as flight time does not vary dramattically across the tested designs. 
 
 # Q2. Is there any evidence that the effect of rotor length differs by leg width?
 

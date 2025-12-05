@@ -16,7 +16,7 @@ The QQ plot shows that the normality assumption is largely satisfied as it follo
 
 # Q1. Which factors are most important to make helicopters that fly longer?
 
-Leg length appears to be the most important factor for increasing flight time, with longer legs showing the largest positive estimated effect of +0.240 seconds. Longer leg width and paperclip use also contribute positively, though to a smaller degree (+0.240 seconds, +0.158 seconds respectively). However, none of these effects reach statistical significance as flight time does not vary dramattically across the tested designs.
+Leg length appears to be the factor with the largest estimated effect on flight time. Compared to the baseline (12 cm legs), the shorter 7.5 cm legs increase predicted flight time by 0.240 seconds, with a 95% confidence interval of approximately (−0.09, 0.56). Leg width and paperclip use also have positive estimated effects—about +0.195 seconds for wider legs and +0.158 seconds for using a paperclip—but their confidence intervals also include zero. Because all factor-level confidence intervals span zero, we cannot conclude that any of these effects are statistically different from no effect.
 
 # Q2. Is there any evidence that the effect of rotor length differs by leg width?
 

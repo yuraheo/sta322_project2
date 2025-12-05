@@ -50,6 +50,16 @@ summary(fit_full)  # anova table for main effects + all interactions
 ```
 
 # Q1. Which factors are most important to make helicopters that fly longer?
+
+```{r}
+fit_main <- lm(
+  FlightTime_sec ~ rotor + leg_len + leg_width + clip,
+  data = heli
+)
+
+summary(fit_main)
+```
+
 ```{r}
 # main efects + selective interactions 
 fit_main2 <- aov(flight_time ~ rotor + leg_len + leg_width + clip +

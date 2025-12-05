@@ -47,20 +47,11 @@ fit_full <- aov(FlightTime_sec ~ rotor * leg_len * leg_width * clip, data = heli
 
 summary(fit_full)  # anova table for main effects + all interactions
 
+
 ```
 
 # Q1. Which factors are most important to make helicopters that fly longer?
 
-```{r}
-fit_main <- lm(
-  FlightTime_sec ~ rotor + leg_len + leg_width + clip,
-  data = heli
-)
-
-summary(fit_main)
-confint(fit_main)
-```
-The model results indicate that leg length and paperclip use are the most important factors influencing helicopter flight duration. The effect of increasing leg length (from 7.5cm to 12.0cm) is estimated to decrease flight time by 0.26 seconds (SE = 0.0587). With the 95% confidence interval being entirely below zero, this shows strong evidence that longer legs reduce flight time, making shorter legs the better design. 
 ```{r}
 fit_full <- lm(
   FlightTime_sec ~ rotor * leg_len * leg_width * clip,
@@ -69,21 +60,7 @@ fit_full <- lm(
 summary(fit_full)
 confint(fit_full)
 ```
-
-## Esimate mean and 95% CI
-```{r}
-emmeans(fit_main2, specs = "rotor")       # means & CI for rotor length
-emmeans(fit_main2, specs = "leg_len")     # means & CI for leg length
-emmeans(fit_main2, specs = "leg_width")   # means & CI for leg width
-emmeans(fit_main2, specs = "clip")        # means & CI for paperclip
-
-# High vs low *effects* (difference + 95% CI) for each factor
-contrast(emmeans(fit_main2, "rotor"),     method = "revpairwise")  # high - low
-contrast(emmeans(fit_main2, "leg_len"),   method = "revpairwise")
-contrast(emmeans(fit_main2, "leg_width"), method = "revpairwise")
-contrast(emmeans(fit_main2, "clip"),      method = "revpairwise")
-```
-
+The model results indicate that leg length and paperclip use are the most important factors influencing helicopter flight duration. The effect of increasing leg length (from 7.5cm to 12.0cm) is estimated to decrease flight time by 0.26 seconds (SE = 0.0587). With the 95% confidence interval being entirely below zero, this shows strong evidence that longer legs reduce flight time, making shorter legs the better design. 
 
 # Q2. Is there any evidence that the effect of rotor length differs by leg width?
 ```{r}
@@ -100,23 +77,13 @@ contrast(emm_rw, "revpairwise")  # rotor_high - rotor_low at each leg_width
 
 
 # Q3: What would you recommend as the ideal combination to make the helicopter fly long?
-```{r}
-# Use model to predict mean flight time for *every* combination
-combos <- expand.grid(
-  rotor     = levels(heli$rotor),
-  leg_len   = levels(heli$leg_len),
-  leg_width = levels(heli$leg_width),
-  clip      = levels(heli$clip)
-)
+Even though statististical differences are not significant, we can still identify the best performing condition by examining the predicted flight times from the full model. The conditions producing the highest predicted flight time were those with: 
+* Longer legs (12 cm)  
+* Wider legs (5.0 cm)
+* A paperclip attached
+* Longer rotor length of 8.5 cm
 
-combos$pred_flight <- predict(fit_main2, newdata = combos)
 
-# Sort from longest to shortest predicted flight time
-best_combos <- combos %>% arrange(desc(pred_flight))
-
-best_combos    # first row = recommended (“ideal”) combination
-
-```
 
 # Diagnostics
 ```{r}

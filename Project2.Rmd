@@ -28,11 +28,7 @@ design$FlightTime_sec <- NA
 #design
 
 ```
-
-<<<<<<< HEAD
-
-=======
->>>>>>> a2e89b761f23d65de9950118faad518709f57b22
+ 
 ```{r}
 library(tidyverse)
 library(emmeans)
@@ -65,25 +61,14 @@ The model results indicate that leg length and paperclip use are the most import
 The analysis of our full factorial design shows that the `rotor:leg_width` interaction is not statistically significant (p = 0.43), meaning the interaction does not meaningfully improve the model. The point estimate for the `rotor:leg_width` interaction is -0.18 seconds, meaning that the difference in flight time between the 8.5 and 7.5 cm rotors is approximately 0.18 seconds shorter when the legs are 5 cm wide than when the legs are 3.2 cm wide. Because our 95% confidence interval is (-0.64, 0.28) and includes 0, there is insufficient statistical evidence to conclude that the effect of rotor length depends on leg width.
 
 # Q3: What would you recommend as the ideal combination to make the helicopter fly long?
-<<<<<<< HEAD
-Even though statististical differences are not significant, we can still identify the best performing condition by examining the predicted flight times from the full model. The conditions producing the highest predicted flight time were those with: 
-* Longer legs (12 cm)  
-* Wider legs (5.0 cm)
-* A paperclip attached
-* Longer rotor length (8.5 cm)
 
-=======
->>>>>>> a2e89b761f23d65de9950118faad518709f57b22
 
 Even though statististical differences are not significant, we can still identify the best performing condition by examining the predicted flight times from the full model. The conditions producing the highest predicted flight time were those with: \* Longer legs (12 cm)\
 \* Wider legs (5.0 cm) \* A paperclip attached \* Longer rotor length of 8.5 cm
 
-<<<<<<< HEAD
 # Model Justification and Diagnostics
-=======
 # Diagnostics
 
->>>>>>> a2e89b761f23d65de9950118faad518709f57b22
 ```{r}
 par(mfrow = c(1, 2))
 plot(fit_full, which = 1)  # Residuals vs fitted (check linearity + constant variance)
@@ -91,9 +76,7 @@ plot(fit_full, which = 2)  # Normal Q–Q plot of residuals
 
 par(mfrow = c(1, 1))
 ```
-<<<<<<< HEAD
 For this experiment, we chose a full factorial design consisting of four factors: roter length(2 levels), leg length(2 levels), leg width(2 levels), paperclip(2 levels). Because the project asks the best combination and interaction effects, a full factorial model makes it the most accurate as it produces predicted means for all 16 combinations.   
 The residuals appear randomly scattered around zeros across the entire range and there is no clear curvature or funneling pattern suggesting there is no evidence of missing nonlinear structure. Homoscedasticity holds reasonably well as the vertical spread of residuals is roughly constant across fitted values.  
 The QQ plot shows that the normality assumption is largely satisfied as it follows the 45 degree line.  
-=======
->>>>>>> a2e89b761f23d65de9950118faad518709f57b22
+

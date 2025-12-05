@@ -36,14 +36,14 @@ heli <- read_csv("helicopter_design.csv")
 glimpse(heli)
 heli <- heli %>%
   mutate(
-    rotor    = factor(rotor),
-    leg_len  = factor(leg_len),
-    leg_width= factor(leg_width),
-    clip     = factor(clip)
+    rotor    = factor(RotorLength),
+    leg_len  = factor(LegLength),
+    leg_width= factor(LegWidth),
+    clip     = factor(PaperClip)
   )
 
 # fit full factorial
-fit_full <- aov(flight_time ~ rotor * leg_len * leg_width * clip, data = heli)
+fit_full <- aov(FlightTime_sec ~ rotor * leg_len * leg_width * clip, data = heli)
 
 summary(fit_full)  # anova table for main effects + all interactions
 
